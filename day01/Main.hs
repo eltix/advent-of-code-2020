@@ -11,20 +11,25 @@ import qualified Data.Text as T
 main :: IO ()
 main = do
   entries <- loadEntries
-  let sol = uncurry (*) <$> sumUpTo 2020 entries
-  putStrLn $ "Solution to part 1: " ++ tshow sol
+  let
+    pairs = arrangements 2 entries
+    sol1   = product <$> sumUpTo 2020 pairs
+  putStrLn $ "Solution to part 1: " ++ tshow sol1
+  let
+    triples = arrangements 3 entries
+    sol2     = product <$> sumUpTo 2020 triples
+  putStrLn $ "Solution to part 2: " ++ tshow sol2
 
-sumUpTo :: Int -> [Int] -> Maybe (Int, Int)
-sumUpTo target entries = find (\(x, y) -> x + y == target) pairs
-  where
-    pairs = allPairs entries
+sumUpTo :: Int -> [[Int]] -> Maybe [Int]
+sumUpTo target = find ((== target) . sum)
 
+-- | arrangements is synonymous (albeit quite old-fashioned) to "k-permutations"
+-- see https://en.wikipedia.org/wiki/Permutation#k-permutations_of_n
+arrangements :: Int -> [a] -> [[a]]
+arrangements _ [] = []
+arrangements 1 xs = [[x] | x <- xs]
+arrangements n (x:xs) = [x:y | y <- arrangements (n-1) xs] ++ arrangements n xs
 
--- | This should probably be generalized to k-permutations of any size k
--- in case we need that later
-allPairs :: [Int] -> [(Int, Int)]
-allPairs [] = []
-allPairs (x:xs) = [(x, y) | y <- xs] ++ allPairs xs
 
 loadEntries :: IO [Int]
 loadEntries = loadListOfIntsSeparatedByNewLine "inputs/day01/part1.txt"
