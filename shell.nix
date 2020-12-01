@@ -20,6 +20,7 @@ let
   nixPackages = [
     pkgs.cabal-install
     ghc
+    pkgs.stylish-haskell
   ];
 
   in

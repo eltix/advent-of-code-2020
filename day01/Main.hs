@@ -1,29 +1,29 @@
 {-# OPTIONS_GHC -Wall #-}
-{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE NoImplicitPrelude   #-}
+{-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE OverloadedStrings #-}
 
 module Main where
 
-import BasicPrelude
-import qualified Data.Text as T
+import           BasicPrelude
+import qualified Data.Text    as T
 
 main :: IO ()
 main = do
   entries <- loadEntries
   let
     pairs = arrangements 2 entries
-    sol1   = product <$> sumUpTo 2020 pairs
+    sol1  = product <$> sumUpTo 2020 pairs
   putStrLn $ "Solution to part 1: " ++ tshow sol1
   let
     triples = arrangements 3 entries
-    sol2     = product <$> sumUpTo 2020 triples
+    sol2    = product <$> sumUpTo 2020 triples
   putStrLn $ "Solution to part 2: " ++ tshow sol2
 
 sumUpTo :: Int -> [[Int]] -> Maybe [Int]
 sumUpTo target = find ((== target) . sum)
 
--- | arrangements is synonymous (albeit quite old-fashioned) to "k-permutations"
+-- | arrangements is synonymous (albeit quite old-fashioned) with "k-permutations"
 -- see https://en.wikipedia.org/wiki/Permutation#k-permutations_of_n
 arrangements :: Int -> [a] -> [[a]]
 arrangements _ [] = []
