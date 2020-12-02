@@ -32,7 +32,7 @@ arrangements n (x:xs) = [x:y | y <- arrangements (n-1) xs] ++ arrangements n xs
 
 
 loadEntries :: IO [Int]
-loadEntries = loadListOfIntsSeparatedByNewLine "inputs/day01/part1.txt"
+loadEntries = loadListOfIntsSeparatedByNewLine "inputs/day01.txt"
 
 loadListOfIntsSeparatedByNewLine :: FilePath -> IO [Int]
 loadListOfIntsSeparatedByNewLine fp =
