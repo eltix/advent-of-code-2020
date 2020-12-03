@@ -1,7 +1,3 @@
-{-# OPTIONS_GHC -Wall #-}
-{-# LANGUAGE NoImplicitPrelude   #-}
-{-# LANGUAGE OverloadedStrings   #-}
-{-# LANGUAGE ScopedTypeVariables #-}
 
 module Main where
 
