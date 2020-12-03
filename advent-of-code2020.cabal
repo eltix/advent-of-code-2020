@@ -33,7 +33,7 @@ library utils
   import:          shared-properties
   hs-source-dirs:  utils
   exposed-modules: Utils.LoadAndParse
-  other-modules:
+  -- other-modules:
   build-depends:
     megaparsec,
     text,

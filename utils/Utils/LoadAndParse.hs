@@ -2,14 +2,14 @@
 module Utils.LoadAndParse
   ( loadAndParseAsRows
   , Parser
-  , module            Text.Megaparsec
+  , module Text.Megaparsec
   , module Text.Megaparsec.Char
   )
   where
 
 import           BasicPrelude
-import qualified Data.Text                  as T
-import           Data.Void                  (Void)
+import qualified Data.Text            as T
+import           Data.Void            (Void)
 import           Text.Megaparsec
 import           Text.Megaparsec.Char
 
