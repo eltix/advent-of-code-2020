@@ -20,7 +20,7 @@ extra-source-files:  CHANGELOG.md, README.md
 common shared-properties
   default-language: Haskell2010
   build-depends:
-    base,
+    base >= 4 && < 5,
     basic-prelude,
   ghc-options:
     -Wall
@@ -37,6 +37,12 @@ library utils
   build-depends:
     megaparsec,
     text,
+
+test-suite tests
+  import:          shared-properties
+  type: exitcode-stdio-1.0
+  main-is: test/Main.hs
+  build-depends: tasty
 
 executable day01
   import:        shared-properties
