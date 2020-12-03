@@ -40,19 +40,19 @@ library utils
 
 executable day01
   import:        shared-properties
-  main-is:       src/day01/Main.hs
+  main-is:       src/day01.hs
   build-depends:
     text
 
 executable day02
   import:        shared-properties
-  main-is:       src/day02/Main.hs
+  main-is:       src/day02.hs
   build-depends:
     utils,
     megaparsec
 
 executable day03
   import:        shared-properties
-  main-is:       src/day03/Main.hs
+  main-is:       src/day03.hs
   build-depends:
     utils

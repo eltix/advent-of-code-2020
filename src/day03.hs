@@ -1,4 +1,3 @@
-
 module Main where
 
 import           BasicPrelude
@@ -36,8 +35,7 @@ main :: IO ()
 main = do
   landscape :: [[Tile]] <- loadAndParseAsRows (many parseTile) "inputs/day03.txt"
   -- part 1
-  let
-    numTreesPart1 = treesEncountered landscape 3
+  let numTreesPart1 = treesEncountered landscape 3
   putStrLn $ "Solution to part 1: " ++ tshow numTreesPart1
   -- part 2
   let

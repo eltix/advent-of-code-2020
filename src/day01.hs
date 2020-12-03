@@ -1,4 +1,3 @@
-
 module Main where
 
 import           BasicPrelude
@@ -22,10 +21,9 @@ sumUpTo target = find ((== target) . sum)
 -- | arrangements is synonymous (albeit quite old-fashioned) with "k-permutations"
 -- see https://en.wikipedia.org/wiki/Permutation#k-permutations_of_n
 arrangements :: Int -> [a] -> [[a]]
-arrangements _ [] = []
-arrangements 1 xs = [[x] | x <- xs]
+arrangements _ []     = []
+arrangements 1 xs     = [[x] | x <- xs]
 arrangements n (x:xs) = [x:y | y <- arrangements (n-1) xs] ++ arrangements n xs
-
 
 loadEntries :: IO [Int]
 loadEntries = loadListOfIntsSeparatedByNewLine "inputs/day01.txt"
