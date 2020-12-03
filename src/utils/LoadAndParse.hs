@@ -1,5 +1,5 @@
 
-module Utils.LoadAndParse
+module LoadAndParse
   ( loadAndParseAsRows
   , Parser
   , module Text.Megaparsec

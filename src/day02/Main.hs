@@ -5,7 +5,7 @@ import           BasicPrelude
 import           Data.Bits                  (xor)
 import qualified Text.Megaparsec.Char.Lexer as L
 
-import           Utils.LoadAndParse
+import           LoadAndParse
 
 data Entry = Entry Int Int Char String
   deriving Show

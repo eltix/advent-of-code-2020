@@ -3,7 +3,7 @@ module Main where
 
 import           BasicPrelude
 
-import           Utils.LoadAndParse
+import           LoadAndParse
 
 data Tile = Open | Tree
   deriving (Show, Eq)

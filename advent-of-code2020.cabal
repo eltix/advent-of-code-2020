@@ -31,8 +31,8 @@ common shared-properties
 
 library utils
   import:          shared-properties
-  hs-source-dirs:  utils
-  exposed-modules: Utils.LoadAndParse
+  hs-source-dirs:  src/utils
+  exposed-modules: LoadAndParse
   -- other-modules:
   build-depends:
     megaparsec,
@@ -40,19 +40,19 @@ library utils
 
 executable day01
   import:        shared-properties
-  main-is:       day01/Main.hs
+  main-is:       src/day01/Main.hs
   build-depends:
     text
 
 executable day02
   import:        shared-properties
-  main-is:       day02/Main.hs
+  main-is:       src/day02/Main.hs
   build-depends:
     utils,
     megaparsec
 
 executable day03
   import:        shared-properties
-  main-is:       day03/Main.hs
+  main-is:       src/day03/Main.hs
   build-depends:
     utils
