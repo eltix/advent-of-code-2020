@@ -1,19 +1,18 @@
-module Main where
+module Day01 where
 
 import           BasicPrelude
 import qualified Data.Text    as T
 
-main :: IO ()
-main = do
+computeSolutions :: IO (Maybe Int, Maybe Int)
+computeSolutions = do
   entries <- loadEntries
   let
     pairs = arrangements 2 entries
     sol1  = product <$> sumUpTo 2020 pairs
-  putStrLn $ "Solution to part 1: " ++ tshow sol1
   let
     triples = arrangements 3 entries
     sol2    = product <$> sumUpTo 2020 triples
-  putStrLn $ "Solution to part 2: " ++ tshow sol2
+  return (sol1, sol2)
 
 sumUpTo :: Int -> [[Int]] -> Maybe [Int]
 sumUpTo target = find ((== target) . sum)

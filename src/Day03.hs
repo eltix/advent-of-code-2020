@@ -1,4 +1,4 @@
-module Main where
+module Day03 where
 
 import           BasicPrelude
 
@@ -31,14 +31,13 @@ treesEncountered ::
   -> Int   -- ^ number of trees encountered
 treesEncountered landscape = length . filter (== Tree) . (flip toboggan) landscape
 
-main :: IO ()
-main = do
+computeSolutions :: IO (Int, Int)
+computeSolutions = do
   landscape :: [[Tile]] <- loadAndParseAsRows (many parseTile) "inputs/day03.txt"
-  -- part 1
-  let numTreesPart1 = treesEncountered landscape 3
-  putStrLn $ "Solution to part 1: " ++ tshow numTreesPart1
-  -- part 2
   let
+    -- part 1
+    sol1 = treesEncountered landscape 3
+    -- part 2
     -- let's go downhill with different toboggan slopes. Weeeeeeeeeee
     slopes   = [1,3,5,7]
     numTrees = treesEncountered landscape <$> slopes
@@ -46,5 +45,5 @@ main = do
     -- toboggan on a half-landscape with every other row skipped
     halfLandscape         = [landscape!!i | i <- [(0::Int),2 .. (length(landscape)-1)]]
     numTreesSteepToboggan = treesEncountered halfLandscape 1
-    allNumTrees           = product $ numTreesSteepToboggan: numTrees
-  putStrLn $ "Solution to part 2: " ++ tshow allNumTrees
+    sol2                  = product $ numTreesSteepToboggan: numTrees
+  return(sol1, sol2)

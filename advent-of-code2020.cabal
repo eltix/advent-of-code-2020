@@ -25,9 +25,19 @@ common shared-properties
   ghc-options:
     -Wall
   default-extensions:
+    DeriveAnyClass,
+    DeriveGeneric,
     NoImplicitPrelude,
     OverloadedStrings,
     ScopedTypeVariables
+
+common exe-and-test
+  import: shared-properties
+  build-depends:
+    day01,
+    day02,
+    day03,
+    day04
 
 library utils
   import:          shared-properties
@@ -39,26 +49,48 @@ library utils
     text,
 
 test-suite tests
-  import:          shared-properties
+  import:          exe-and-test
   type: exitcode-stdio-1.0
   main-is: test/Main.hs
-  build-depends: tasty
-
-executable day01
-  import:        shared-properties
-  main-is:       src/day01.hs
   build-depends:
-    text
+    tasty,
+    tasty-hunit,
 
-executable day02
-  import:        shared-properties
-  main-is:       src/day02.hs
+executable day
+  import:        exe-and-test
+  main-is:       app/Main.hs
+  build-depends:
+
+
+library day01
+  import:          shared-properties
+  hs-source-dirs:  src
+  exposed-modules: Day01
+  build-depends:
+    text,
+
+library day02
+  import:          shared-properties
+  hs-source-dirs:  src
+  exposed-modules: Day02
   build-depends:
     utils,
     megaparsec
 
-executable day03
-  import:        shared-properties
-  main-is:       src/day03.hs
+library day03
+  import:          shared-properties
+  hs-source-dirs:  src
+  exposed-modules: Day03
   build-depends:
+    utils
+
+library day04
+  import:          shared-properties
+  hs-source-dirs:  src
+  exposed-modules: Day04
+  build-depends:
+    text,
+    hashable,
+    unordered-containers,
+    megaparsec,
     utils
