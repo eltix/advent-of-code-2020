@@ -4,6 +4,7 @@ import           BasicPrelude
 import qualified Day01        (computeSolutions)
 import qualified Day02        (computeSolutions)
 import qualified Day03        (computeSolutions)
+import qualified Day04        (computeSolutions)
 
 main :: IO ()
 main = do
@@ -20,6 +21,7 @@ solutions =
   [ printSolution Day01.computeSolutions
   , printSolution Day02.computeSolutions
   , printSolution Day03.computeSolutions
+  , printSolution Day04.computeSolutions
   ]
 
 printSolution :: Show a => IO (a, a) -> IO ()

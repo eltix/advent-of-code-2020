@@ -9,18 +9,18 @@ import           Text.Megaparsec
 import           Text.Megaparsec.Char
 import qualified Text.Megaparsec.Char.Lexer as L
 
-main :: IO ()
-main = do
+computeSolutions :: IO (Int, Int)
+computeSolutions = do
   content <- readFile "inputs/day04.txt"
   let
     passports      = fromTexts <$> preprocess content
+    -- part 1
     haveRequiredFieldsPassports = filter hasRequiredFields passports
     sol1           = length haveRequiredFieldsPassports
-  putStrLn $ "Solution to part 1: " ++ tshow sol1
-  let
+    -- part 2
     validPassports = filter hasValidData haveRequiredFieldsPassports
     sol2 = length validPassports
-  putStrLn $ "Solution to part 2: " ++ tshow sol2
+  return (sol1, sol2)
 
 data Field = Birth | Issue | Expiration | Height | Hair | Eye | Id | Country
   deriving (Show, Eq, Generic, Hashable)
