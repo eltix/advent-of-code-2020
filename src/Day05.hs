@@ -17,7 +17,7 @@ parseSeat = do
     parseRL = choice [True <$ char 'R', False <$ char 'L']
 
 bitsToInt :: [Bool] -> Int
-bitsToInt bits = sum $ [fromEnum b * 2^i | (i, b) <- zip [0::Int ..] (reverse bits)]
+bitsToInt = sum . fmap (\(i, bit) -> fromEnum bit * 2^i) . zip [(0::Int)..] . reverse
 
 toId :: Seat -> Int
 toId (Seat r c) = 8*r + c
