@@ -94,3 +94,10 @@ library day04
     unordered-containers,
     megaparsec,
     utils
+
+library day05
+  import:          shared-properties
+  hs-source-dirs:  src
+  exposed-modules: Day05
+  build-depends:
+    utils
