@@ -5,6 +5,7 @@ import qualified Day01        (computeSolutions)
 import qualified Day02        (computeSolutions)
 import qualified Day03        (computeSolutions)
 import qualified Day04        (computeSolutions)
+import qualified Day05        (computeSolutions)
 
 main :: IO ()
 main = do
@@ -22,9 +23,10 @@ solutions =
   , printSolution Day02.computeSolutions
   , printSolution Day03.computeSolutions
   , printSolution Day04.computeSolutions
+  , printSolution Day05.computeSolutions
   ]
 
-printSolution :: Show a => IO (a, a) -> IO ()
+printSolution :: (Show a, Show b) => IO (a, b) -> IO ()
 printSolution solIO = do
   (sol1, sol2) <- solIO
   putStrLn $ "  Part 1: " ++ tshow sol1
