@@ -39,6 +39,12 @@ common exe-and-test
     day03,
     day04,
     day05,
+    day06,
+    day06,
+
+common days-properties
+  import:         shared-properties
+  hs-source-dirs: src
 
 library utils
   import:          shared-properties
@@ -62,32 +68,27 @@ executable day
   main-is:       app/Main.hs
   build-depends:
 
-
 library day01
-  import:          shared-properties
-  hs-source-dirs:  src
+  import:          days-properties
   exposed-modules: Day01
   build-depends:
     text,
 
 library day02
-  import:          shared-properties
-  hs-source-dirs:  src
+  import:          days-properties
   exposed-modules: Day02
   build-depends:
     utils,
     megaparsec
 
 library day03
-  import:          shared-properties
-  hs-source-dirs:  src
+  import:          days-properties
   exposed-modules: Day03
   build-depends:
     utils
 
 library day04
-  import:          shared-properties
-  hs-source-dirs:  src
+  import:          days-properties
   exposed-modules: Day04
   build-depends:
     text,
@@ -97,8 +98,13 @@ library day04
     utils
 
 library day05
-  import:          shared-properties
-  hs-source-dirs:  src
+  import:          days-properties
   exposed-modules: Day05
+  build-depends:
+    utils
+
+library day06
+  import:          days-properties
+  exposed-modules: Day06
   build-depends:
     utils

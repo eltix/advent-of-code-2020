@@ -1,4 +1,4 @@
-# advent-of-code-2020
+# advent-of-code2020
 
 Solutions for Advent of Code 2020
 
