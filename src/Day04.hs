@@ -4,22 +4,22 @@ import           BasicPrelude
 import qualified Data.HashMap.Strict        as HM
 import qualified Data.Text                  as T
 import           GHC.Generics               (Generic)
-import           LoadAndParse               (Parser)
+import           LoadAndParse               (Parser,
+                                             loadAndConvertFromTextGroups)
 import           Text.Megaparsec
 import           Text.Megaparsec.Char
 import qualified Text.Megaparsec.Char.Lexer as L
 
 computeSolutions :: IO (Int, Int)
 computeSolutions = do
-  content <- readFile "inputs/day04.txt"
+  passports <- loadAndConvertFromTextGroups fromTexts "inputs/day04.txt"
   let
-    passports      = fromTexts <$> preprocess content
     -- part 1
     haveRequiredFieldsPassports = filter hasRequiredFields passports
-    sol1           = length haveRequiredFieldsPassports
+    sol1                        = length haveRequiredFieldsPassports
     -- part 2
     validPassports = filter hasValidData haveRequiredFieldsPassports
-    sol2 = length validPassports
+    sol2           = length validPassports
   return (sol1, sol2)
 
 data Field = Birth | Issue | Expiration | Height | Hair | Eye | Id | Country
@@ -54,18 +54,10 @@ hasValidData p = all id
 -- Parsing, parsing, parsing
 -- Day 4 puzzle is mostly all about parsing
 
--- | Preprocess the input file such that it can directly be parsed to a list of
--- 'Passport's
-preprocess :: Text -> [[Text]]
-preprocess = fmap splitOnSpace . fmap normalize . splitOnBlankLine
-  where
-    splitOnBlankLine = T.splitOn "\n\n"   -- passports are separated by blank lines
-    normalize        = T.replace "\n" " " -- treat newlines as spaces
-    splitOnSpace     = T.words            -- pairs (key, value) are separated by spaces
-
 fromTexts :: [Text] -> Passport
 fromTexts = HM.fromList . fmap textToEntry
 
+-- | FIXME: this function is partial
 textToEntry :: Text -> (Field, Text)
 textToEntry t = case runParser parseEntry "" t of
   Right content -> content

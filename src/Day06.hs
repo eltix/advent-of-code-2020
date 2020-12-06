@@ -3,13 +3,14 @@ module Day06 where
 import           BasicPrelude
 import qualified Data.Set     as Set
 import qualified Data.Text    as T
+import           LoadAndParse (loadAndConvertFromTextGroups)
 
 newtype Group = Group [Person] deriving Show
 newtype Person = Person (Set Char) deriving Show
 
 computeSolutions :: IO (Int, Int)
 computeSolutions = do
-  groups :: [Group] <- fmap toGroup . preprocess <$> readFile "inputs/day06.txt"
+  groups :: [Group] <- loadAndConvertFromTextGroups fromTexts "inputs/day06.txt"
   let
     -- part 1
     groupsAnswers = anyoneSaidYesInGroup <$> groups
@@ -25,14 +26,5 @@ anyoneSaidYesInGroup (Group persons) = Set.unions [answers | (Person answers) <-
 everyoneSaidYesInGroup :: Group -> Set Char
 everyoneSaidYesInGroup (Group persons) = foldl1' Set.intersection [answers | (Person answers) <- persons]
 
-toGroup :: [Text] -> Group
-toGroup = Group . fmap (Person . Set.fromList . T.unpack)
-
--- | Preprocess the input file such that it can directly be parsed to a list of
--- 'Passport's
-preprocess :: Text -> [[Text]]
-preprocess = fmap splitOnSpace . fmap normalize . splitOnBlankLine
-  where
-    splitOnBlankLine = T.splitOn "\n\n"   -- passports are separated by blank lines
-    normalize        = T.replace "\n" " " -- treat newlines as spaces
-    splitOnSpace     = T.words            -- pairs (key, value) are separated by spaces
+fromTexts :: [Text] -> Group
+fromTexts = Group . fmap (Person . Set.fromList . T.unpack)
