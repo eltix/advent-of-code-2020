@@ -16,7 +16,7 @@ Run this command
 cabal run day <day>
 ```
 
-with `<day>` in $\left\{1, \ldots, 25\right\}$ to get the solutions to
+with `<day>` in {1, ..., 25} to get the solutions to
 both part 1 and part 2 of the day.
 
 ## Testing

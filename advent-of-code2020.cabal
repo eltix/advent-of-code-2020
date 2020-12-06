@@ -107,4 +107,6 @@ library day06
   import:          days-properties
   exposed-modules: Day06
   build-depends:
-    utils
+    utils,
+    containers,
+    text,
