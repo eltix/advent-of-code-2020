@@ -4,10 +4,7 @@ import           BasicPrelude
 import qualified Data.HashMap.Strict        as HM
 import qualified Data.Text                  as T
 import           GHC.Generics               (Generic)
-import           LoadAndParse               (Parser,
-                                             loadAndConvertFromTextGroups)
-import           Text.Megaparsec
-import           Text.Megaparsec.Char
+import           LoadAndParse
 import qualified Text.Megaparsec.Char.Lexer as L
 
 computeSolutions :: IO (Int, Int)
@@ -46,22 +43,16 @@ hasValidData p = all id
     intEntryInBounds :: (Int, Int) -> Text -> Bool
     intEntryInBounds (a, b) t = let i = read t in i >= a && i <= b
 
-    validHeight t = case runParser (parseHeight <* eof) "" t of
-      Right (h, Cm) -> h >= 150 && h <= 193
-      Right (h, In) -> h >= 59 && h <= 76
-      _             -> False
+    validHeight t = case parseMaybe parseHeight t of
+      Just (h, Cm) -> h >= 150 && h <= 193
+      Just (h, In) -> h >= 59 && h <= 76
+      _            -> False
 
 -- Parsing, parsing, parsing
--- Day 4 puzzle is mostly all about parsing
+-- Day 4 puzzles are mostly all about parsing
 
 fromTexts :: [Text] -> Passport
-fromTexts = HM.fromList . fmap textToEntry
-
--- | FIXME: this function is partial
-textToEntry :: Text -> (Field, Text)
-textToEntry t = case runParser parseEntry "" t of
-  Right content -> content
-  Left e        -> error $ "failed to parse content: " ++ errorBundlePretty e
+fromTexts = HM.fromList . fmap (unsafeParse parseEntry)
 
 parseEntry :: Parser (Field, Text)
 parseEntry = do
@@ -84,9 +75,7 @@ parseField = choice
 
 -- | Check that a 'Passport' field is valid by trying to parse it
 validateByParsing :: Parser a -> Text -> Bool
-validateByParsing parser x = case runParser (parser <* eof) "" x of
-  Right _ -> True
-  Left _  -> False
+validateByParsing parser = isJust . parseMaybe parser
 
 parseHair :: Parser String
 parseHair = do

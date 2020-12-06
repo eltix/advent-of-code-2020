@@ -3,6 +3,7 @@ module LoadAndParse
   ( -- * Parsing
     loadAndParseAsRows
   , Parser
+  , unsafeParse
   , module Text.Megaparsec
   , module Text.Megaparsec.Char
   -- * Text utils
@@ -12,6 +13,7 @@ module LoadAndParse
   where
 
 import           BasicPrelude
+import           Data.Maybe           (fromJust)
 import qualified Data.Text            as T
 import           Data.Void            (Void)
 import           Text.Megaparsec
@@ -32,6 +34,11 @@ type Parser = Parsec Void Text
 loadAndConvertFromTextGroups :: ([Text] -> a) -> String -> IO [a]
 loadAndConvertFromTextGroups fromTexts filePath =
   fmap fromTexts . splitIntoGroups <$> readFile filePath
+
+-- | XXX This function is partial. Use at your own risk.
+-- Typically used when we're too lazy to propagate 'Either'
+unsafeParse :: Parser a -> Text -> a
+unsafeParse parser = fromJust . parseMaybe parser
 
 -- | Preprocess a text input file where groups are seperated by blank lines
 -- and items in a group are seperated by either a newline or a space
