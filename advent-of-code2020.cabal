@@ -40,7 +40,7 @@ common exe-and-test
     day04,
     day05,
     day06,
-    day06,
+    day07,
 
 common days-properties
   import:         shared-properties
@@ -110,3 +110,12 @@ library day06
     utils,
     containers,
     text,
+
+library day07
+  import:          days-properties
+  exposed-modules: Day07
+  build-depends:
+    utils,
+    megaparsec,
+    containers,
+    unordered-containers,
