@@ -4,6 +4,7 @@ module LoadAndParse
     loadAndParseAsRows
   , Parser
   , unsafeParse
+  , lexeme, symbol
   , module Text.Megaparsec
   , module Text.Megaparsec.Char
   -- * Text utils
@@ -12,12 +13,13 @@ module LoadAndParse
   )
   where
 
-import           BasicPrelude
-import           Data.Maybe           (fromJust)
-import qualified Data.Text            as T
-import           Data.Void            (Void)
+import           BasicPrelude               hiding (empty)
+import           Data.Maybe                 (fromJust)
+import qualified Data.Text                  as T
+import           Data.Void                  (Void)
 import           Text.Megaparsec
 import           Text.Megaparsec.Char
+import qualified Text.Megaparsec.Char.Lexer as L
 
 loadAndParseAsRows :: Parser a -> String -> IO [a]
 loadAndParseAsRows contentParser filePath = do
@@ -30,6 +32,18 @@ parseRow contentParser t = case runParser (contentParser <* eof) "" t of
   Left someParseError -> fail $ "failed to parse content: " ++ errorBundlePretty someParseError
 
 type Parser = Parsec Void Text
+
+-- | Turn a parser into a lexeme, i.e. make it consume and ignore the
+-- whitespace after the main content.
+lexeme :: Parser a -> Parser a
+lexeme = L.lexeme sc
+
+-- | space consumer
+sc :: Parser ()
+sc = L.space space1 empty empty
+
+symbol :: Text -> Parser Text
+symbol = L.symbol sc
 
 loadAndConvertFromTextGroups :: ([Text] -> a) -> String -> IO [a]
 loadAndConvertFromTextGroups fromTexts filePath =

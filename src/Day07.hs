@@ -1,11 +1,10 @@
 module Day07 where
 
-import           BasicPrelude               hiding (empty)
+import           BasicPrelude
 import qualified Data.HashMap.Strict        as HM
 import qualified Data.Set                   as Set
 import           GHC.Generics               (Generic)
 import           Text.Megaparsec
-import           Text.Megaparsec.Char
 import qualified Text.Megaparsec.Char.Lexer as L
 
 import           LoadAndParse
@@ -56,30 +55,20 @@ parseRule = do
   containees <- manyTill parseContainee parseEnd
   pure $ Rule (BagColor container) containees
 
+-- | XXX: Couldn't figure out how to remove the trailing space from the
+-- bag color so I added it to the content to be matched by this parser
 bagParser :: Parser ()
 bagParser = lexeme $ choice
-  [ () <$ symbol " bags"
-  , () <$ symbol " bag"
+  [ () <$ symbol " bags" -- the order is paramount here: parsing 'bag'
+  , () <$ symbol " bag"  -- before 'bags' would lead to an unexpected 's'
   ]
 
 parseContainee :: Parser (Int, BagColor)
 parseContainee = do
   i     <- lexeme L.decimal <?> "integer"
   color <- manyTill L.charLiteral bagParser
-  _ <- lexeme $ choice [() <$ ",", () <$ "."]
+  _     <- lexeme $ choice [() <$ ",", () <$ "."]
   pure (i, BagColor color)
-
 
 parseEnd :: Parser ()
 parseEnd = choice [eof, void $ symbol "no other bags."]
-
--- | Turn a parser into a lexeme, i.e. make it consume and ignore the
--- whitespace after the main content.
-lexeme :: Parser a -> Parser a
-lexeme = L.lexeme sc
--- | space consumer
-sc :: Parser ()
-sc = L.space space1 empty empty
-
-symbol :: Text -> Parser Text
-symbol = L.symbol sc
