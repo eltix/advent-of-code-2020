@@ -4,7 +4,6 @@ import           BasicPrelude
 import qualified Data.HashMap.Strict        as HM
 import qualified Data.Set                   as Set
 import           GHC.Generics               (Generic)
-import           Text.Megaparsec
 import qualified Text.Megaparsec.Char.Lexer as L
 
 import           LoadAndParse

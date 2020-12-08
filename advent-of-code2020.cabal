@@ -41,6 +41,7 @@ common exe-and-test
     day05,
     day06,
     day07,
+    day08,
 
 common days-properties
   import:         shared-properties
@@ -119,3 +120,11 @@ library day07
     megaparsec,
     containers,
     unordered-containers,
+
+library day08
+  import:          days-properties
+  exposed-modules: Day08
+  build-depends:
+    utils,
+    microlens,
+    microlens-th
