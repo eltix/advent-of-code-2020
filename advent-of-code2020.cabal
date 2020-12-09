@@ -42,6 +42,7 @@ common exe-and-test
     day06,
     day07,
     day08,
+    day09,
 
 common days-properties
   import:         shared-properties
@@ -51,7 +52,6 @@ library utils
   import:          shared-properties
   hs-source-dirs:  src/utils
   exposed-modules: LoadAndParse
-  -- other-modules:
   build-depends:
     megaparsec,
     text,
@@ -128,3 +128,10 @@ library day08
     utils,
     microlens,
     microlens-th
+
+library day09
+  import:          days-properties
+  exposed-modules: Day09
+  other-modules: Day01
+  build-depends:
+    text
