@@ -43,6 +43,7 @@ common exe-and-test
     day07,
     day08,
     day09,
+    day10,
 
 common days-properties
   import:         shared-properties
@@ -135,3 +136,9 @@ library day09
   other-modules: Day01
   build-depends:
     text
+
+library day10
+  import:          days-properties
+  exposed-modules: Day10
+  build-depends:
+    utils
