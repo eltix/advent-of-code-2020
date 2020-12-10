@@ -13,14 +13,25 @@ computeSolutions = do
     threes      = length . filter (==3) $ differences
     sol1 = ones * threes
     -- part 2
+    -- group the differences into groups of consecutive ones and threes
+    -- (fortunately there are no twos)
     groupped = group differences
+    -- only the groups of ones matter as a difference of 3 is not mutable
     groupsOfOne = filter (1 `elem`) groupped
-    sol2 = foldl' (\acc x -> acc * (countArrangements . length $ x)) 1 groupsOfOne
+    -- for each group of ones, there are 'countArrangements' ways of arranging
+    -- the chargers. Then we take the product of all arrangements of all groups
+    sol2 = product . fmap (countArrangements . length) $ groupsOfOne
   return (sol1, sol2)
 
+-- | I'm not very happy with this solution.
+-- For \(n \leq 3\) it's easy because it's just \(2^(n-1)\).
+-- But then it gets trickier because we must not have a gap greater than three
+-- between two consecutive numbers. I manually found the answer for 4 and realized
+-- that's the maximum for my puzzle input so I stopped there. Surely there must be
+-- a better solution
 countArrangements :: Int -> Int
 countArrangements 1 = 1
 countArrangements 2 = 2
 countArrangements 3 = 4
 countArrangements 4 = 7
-countArrangements _ = error "woops. Is there an analytical formula for this?"
+countArrangements _ = error "Woops! Is there an analytical formula for this?"
