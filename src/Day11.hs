@@ -1,15 +1,13 @@
 module Day11 where
 
 import           BasicPrelude
-import           Control.DeepSeq     (NFData, ($!!))
 import qualified Data.HashMap.Strict as HM
-import           GHC.Generics
 
 import           LoadAndParse
 
 
 data Position = Floor | Empty | Occupied
-  deriving (Eq, Generic, NFData)
+  deriving Eq
 
 type Ferry = [[Position]]
 type FerryMatrix = HashMap (Int, Int) Position
@@ -21,19 +19,6 @@ toMatrix = HM.fromList . concat . zipWith toColumn [0..] . fmap toRow
     toRow = zip [0..]
     toColumn :: Int -> [(Int, Position)] -> [((Int, Int), Position)]
     toColumn rowIndex xs = [((rowIndex, colIndex), pos) | (colIndex, pos) <- xs]
---
--- fromMatrix :: FerryMatrix -> Ferry
--- fromMatrix matrix = res
---   where
---     keys = HM.keys matrix
---     numRows = maximum . fst <$> keys
---     numCols = maximum . snd  <$> keys
-
-
-instance Show Position where
-  show Floor    = "."
-  show Empty    = "L"
-  show Occupied = "#"
 
 parsePosition :: Parser Position
 parsePosition = choice
@@ -46,7 +31,7 @@ fixedPoint :: (FerryMatrix -> FerryMatrix) -> FerryMatrix -> FerryMatrix
 fixedPoint applyRule = go
   where
     go matrix | matrix == applyRule matrix = matrix
-              | otherwise                  = go $!! applyRule matrix
+              | otherwise                  = go $ applyRule matrix
 
 applyRule1 :: FerryMatrix -> FerryMatrix
 applyRule1 previousState = HM.mapWithKey applyRule previousState
