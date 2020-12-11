@@ -11,6 +11,7 @@ import qualified Day07        (computeSolutions)
 import qualified Day08        (computeSolutions)
 import qualified Day09        (computeSolutions)
 import qualified Day10        (computeSolutions)
+import qualified Day11        (computeSolutions)
 
 main :: IO ()
 main = do
@@ -34,6 +35,7 @@ solutions =
   , printSolution Day08.computeSolutions
   , printSolution Day09.computeSolutions
   , printSolution Day10.computeSolutions
+  , printSolution Day11.computeSolutions
   ]
 
 printSolution :: (Show a, Show b) => IO (a, b) -> IO ()
