@@ -30,48 +30,50 @@ parsePosition = choice
 fixedPoint :: (FerryMatrix -> FerryMatrix) -> FerryMatrix -> FerryMatrix
 fixedPoint applyRule = go
   where
-    go matrix | matrix == applyRule matrix = matrix
-              | otherwise                  = go $ applyRule matrix
+    go matrix =
+      let matrix' = applyRule matrix
+      in if matrix == matrix' then matrix else go matrix'
 
 applyRule1 :: FerryMatrix -> FerryMatrix
 applyRule1 previousState = HM.mapWithKey applyRule previousState
   where
     applyRule (i, j) pos
-      | looksGood (i, j) pos  = Occupied
-      | tooCrowded (i, j) pos = Empty
-      | otherwise             = pos
-    looksGood (i, j) pos =
-      pos == Empty && (null . filter (== (Just Occupied)) $ adjacent (i, j))
-    tooCrowded (i, j) pos =
-      pos == Occupied && ((length . filter (== (Just Occupied)) $ adjacent (i, j)) >= 4)
-    adjacent (i, j) = (`HM.lookup` previousState) <$>
-      [ (i-1, j-1), (i-1, j), (i-1, j+1)
-      , (i  , j-1),           (i  , j+1)
-      , (i+1, j-1), (i+1, j), (i+1, j+1)
-      ]
+      | pos == Empty && (any id occupied)     = Empty
+      | pos == Empty                          = Occupied
+      | pos == Occupied && atLeast 4 occupied = Empty
+      | otherwise                             = pos
+      where
+        occupied = ((== (Just Occupied)) . (`HM.lookup` previousState)) <$>
+          [ (i-1, j-1), (i-1, j), (i-1, j+1)
+          , (i  , j-1),           (i  , j+1)
+          , (i+1, j-1), (i+1, j), (i+1, j+1)
+          ]
 
 -- | We could probably factorize some of this with 'previousState'
 applyRule2 :: FerryMatrix -> FerryMatrix
 applyRule2 mat = HM.mapWithKey applyRule mat
   where
     applyRule (i, j) pos
-      | looksGood (i, j) pos  = Occupied
-      | tooCrowded (i, j) pos = Empty
-      | otherwise             = pos
-    looksGood (i, j) pos  = pos == Empty && (all not $ occupied (i, j))
-    tooCrowded (i, j) pos =
-      pos == Occupied && ((length . filter id $ occupied (i, j)) >= 5)
-    occupied :: (Int, Int) -> [Bool]
-    occupied (i, j) = searchDirection (i, j) <$>
+      | pos == Empty && (any id occupied)     = Empty
+      | pos == Empty                          = Occupied
+      | pos == Occupied && atLeast 5 occupied = Empty
+      | otherwise                             = pos
+      where occupied = adjacentOccupied (i, j) :: [Bool]
+
+    adjacentOccupied :: (Int, Int) -> [Bool]
+    adjacentOccupied (i, j) = searchDirection (i, j) <$>
       [ (-1, -1), (-1, 0), (-1, 1)
       , ( 0, -1),          ( 0 ,1)
       , ( 1, -1), ( 1, 0), ( 1, 1)
       ]
-
     searchDirection (i, j) (a, b) = case (i+a, j+b) `HM.lookup` mat of
       Just Floor    -> searchDirection (i+a, j+b) (a, b)
       Just Occupied -> True
       _             -> False
+
+-- | Checks lazily that there are at least n @True@ items in a list of @Bool@
+atLeast :: Int -> [Bool] -> Bool
+atLeast n = (== n) . length . take n . filter id
 
 computeSolutions :: IO (Int, Int)
 computeSolutions = do

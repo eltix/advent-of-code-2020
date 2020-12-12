@@ -150,8 +150,7 @@ library day11
   exposed-modules: Day11
   build-depends:
     utils,
-    unordered-containers,
-    deepseq
+    unordered-containers
 
 library day12
   import:          days-properties
