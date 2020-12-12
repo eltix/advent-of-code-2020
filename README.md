@@ -1,6 +1,6 @@
 # advent-of-code2020
 
-Solutions for Advent of Code 2020
+Solutions for Advent of Code 2020 in Haskell
 
 ## Installation
 
