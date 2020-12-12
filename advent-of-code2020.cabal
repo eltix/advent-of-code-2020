@@ -45,6 +45,7 @@ common exe-and-test
     day09,
     day10,
     day11,
+    day12,
 
 common days-properties
   import:         shared-properties
@@ -151,3 +152,10 @@ library day11
     utils,
     unordered-containers,
     deepseq
+
+library day12
+  import:          days-properties
+  exposed-modules: Day12
+  build-depends:
+    utils,
+    microlens,
