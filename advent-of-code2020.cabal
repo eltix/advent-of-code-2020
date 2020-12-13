@@ -46,6 +46,7 @@ common exe-and-test
     day10,
     day11,
     day12,
+    day13,
 
 common days-properties
   import:         shared-properties
@@ -158,3 +159,9 @@ library day12
   build-depends:
     utils,
     microlens,
+
+library day13
+  import:          days-properties
+  exposed-modules: Day13
+  build-depends:
+    text
