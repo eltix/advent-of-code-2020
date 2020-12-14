@@ -2,8 +2,8 @@ module Day05 where
 
 import           BasicPrelude
 
+import           Aoc.Bit      (bitsToInt)
 import           LoadAndParse
-import Aoc.Bit (bitsToInt)
 
 data Seat = Seat{row :: Int, column :: Int}
   deriving (Show)
