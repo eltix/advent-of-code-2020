@@ -47,6 +47,7 @@ common exe-and-test
     day11,
     day12,
     day13,
+    day14,
 
 common days-properties
   import:         shared-properties
@@ -59,6 +60,11 @@ library utils
   build-depends:
     megaparsec,
     text,
+
+library aoc-bit
+  import:          shared-properties
+  hs-source-dirs:  src/aoc-bit
+  exposed-modules: Aoc.Bit
 
 test-suite tests
   import:          exe-and-test
@@ -106,7 +112,8 @@ library day05
   import:          days-properties
   exposed-modules: Day05
   build-depends:
-    utils
+    utils,
+    aoc-bit
 
 library day06
   import:          days-properties
@@ -165,3 +172,11 @@ library day13
   exposed-modules: Day13
   build-depends:
     text
+
+library day14
+  import:          days-properties
+  exposed-modules: Day14
+  build-depends:
+    utils,
+    aoc-bit,
+    unordered-containers

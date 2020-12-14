@@ -3,6 +3,7 @@ module Day05 where
 import           BasicPrelude
 
 import           LoadAndParse
+import Aoc.Bit (bitsToInt)
 
 data Seat = Seat{row :: Int, column :: Int}
   deriving (Show)
@@ -15,9 +16,6 @@ parseSeat = do
   where
     parseBF = choice [True <$ char 'B', False <$ char 'F']
     parseRL = choice [True <$ char 'R', False <$ char 'L']
-
-bitsToInt :: [Bool] -> Int
-bitsToInt = sum . fmap (\(i, bit) -> fromEnum bit * 2^i) . zip [(0::Int)..] . reverse
 
 toId :: Seat -> Int
 toId (Seat r c) = 8*r + c
