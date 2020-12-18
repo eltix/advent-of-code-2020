@@ -48,6 +48,8 @@ common exe-and-test
     day12,
     day13,
     day14,
+    day15,
+    day16,
 
 common days-properties
   import:         shared-properties
@@ -180,3 +182,16 @@ library day14
     utils,
     aoc-bit,
     unordered-containers
+
+library day15
+  import:          days-properties
+  exposed-modules: Day15
+  build-depends:
+    unordered-containers,
+    deepseq
+
+library day16
+  import:          days-properties
+  exposed-modules: Day16
+  build-depends:
+    utils
