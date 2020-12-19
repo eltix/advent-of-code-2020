@@ -20,6 +20,7 @@ import qualified Day13
 import qualified Day14
 import qualified Day15
 import qualified Day16
+import qualified Day17
 
 main :: IO ()
 main = defaultMain $ testGroup "Tests"
@@ -39,4 +40,5 @@ main = defaultMain $ testGroup "Tests"
   , testCase "Day 14" $ Day14.computeSolutions >>= (@?= (14722016054794, 3618217244644))
   , testCase "Day 15" $ Day15.computeSolutions >>= (@?= (0, 0))
   , testCase "Day 16" $ Day16.computeSolutions >>= (@?= (21956, Just 3709435214239))
+  , testCase "Day 17" $ Day17.computeSolutions >>= (@?= (267, 1812))
   ]

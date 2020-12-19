@@ -50,6 +50,7 @@ common exe-and-test
     day14,
     day15,
     day16,
+    day17,
 
 common days-properties
   import:         shared-properties
@@ -196,3 +197,11 @@ library day16
   build-depends:
     utils,
     text
+
+library day17
+  import:          days-properties
+  exposed-modules: Day17
+  build-depends:
+    unordered-containers,
+    containers,
+    utils

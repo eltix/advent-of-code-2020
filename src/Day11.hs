@@ -49,7 +49,7 @@ applyRule1 previousState = HM.mapWithKey applyRule previousState
           , (i+1, j-1), (i+1, j), (i+1, j+1)
           ]
 
--- | We could probably factorize some of this with 'previousState'
+-- | We could probably factorize some of this with 'applyRule1'
 applyRule2 :: FerryMatrix -> FerryMatrix
 applyRule2 mat = HM.mapWithKey applyRule mat
   where
