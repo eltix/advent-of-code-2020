@@ -194,4 +194,5 @@ library day16
   import:          days-properties
   exposed-modules: Day16
   build-depends:
-    utils
+    utils,
+    text

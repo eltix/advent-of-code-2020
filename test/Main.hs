@@ -38,5 +38,5 @@ main = defaultMain $ testGroup "Tests"
   , testCase "Day 13" $ Day13.computeSolutions >>= (@?= (104,842186186521918))
   , testCase "Day 14" $ Day14.computeSolutions >>= (@?= (14722016054794, 3618217244644))
   , testCase "Day 15" $ Day15.computeSolutions >>= (@?= (0, 0))
-  , testCase "Day 16" $ Day16.computeSolutions >>= (@?= (0, 0))
+  , testCase "Day 16" $ Day16.computeSolutions >>= (@?= (21956, Just 3709435214239))
   ]

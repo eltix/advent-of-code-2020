@@ -7,6 +7,7 @@ module LoadAndParse
   , lexeme, symbol, signedInt
   , module Text.Megaparsec
   , module Text.Megaparsec.Char
+  , parseRow
   -- * Text utils
   , loadAndConvertFromTextGroups
   , splitIntoGroups
