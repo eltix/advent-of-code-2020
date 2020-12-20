@@ -190,7 +190,7 @@ library day15
   exposed-modules: Day15
   build-depends:
     unordered-containers
-    
+
 library day16
   import:          days-properties
   exposed-modules: Day16
@@ -211,4 +211,4 @@ library day18
   exposed-modules: Day18
   build-depends:
     utils,
-    text
+    parser-combinators
