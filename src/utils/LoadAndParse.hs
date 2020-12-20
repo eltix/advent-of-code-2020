@@ -4,7 +4,7 @@ module LoadAndParse
     loadAndParseAsRows
   , Parser
   , unsafeParse
-  , lexeme, symbol, signedInt
+  , lexeme, symbol, signedInt, int
   , module Text.Megaparsec
   , module Text.Megaparsec.Char
   , parseRow
@@ -45,6 +45,9 @@ sc = L.space space1 empty empty
 
 symbol :: Text -> Parser Text
 symbol = L.symbol sc
+
+int :: Parser Int
+int = lexeme L.decimal
 
 signedInt :: Parser Int
 signedInt = L.signed sc L.decimal
