@@ -51,6 +51,7 @@ common exe-and-test
     day15,
     day16,
     day17,
+    day18,
 
 common days-properties
   import:         shared-properties
@@ -188,9 +189,8 @@ library day15
   import:          days-properties
   exposed-modules: Day15
   build-depends:
-    unordered-containers,
-    deepseq
-
+    unordered-containers
+    
 library day16
   import:          days-properties
   exposed-modules: Day16
@@ -205,3 +205,10 @@ library day17
     unordered-containers,
     containers,
     utils
+
+library day18
+  import:          days-properties
+  exposed-modules: Day18
+  build-depends:
+    utils,
+    text
