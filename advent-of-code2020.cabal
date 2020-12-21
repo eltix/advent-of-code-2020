@@ -190,7 +190,8 @@ library day15
   import:          days-properties
   exposed-modules: Day15
   build-depends:
-    unordered-containers
+    unordered-containers,
+    containers
 
 library day16
   import:          days-properties

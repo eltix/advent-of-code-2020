@@ -62,7 +62,7 @@ inline ruleMap (OrR r1 r2) = do
 data Rule = OneR Char | SeveralR References | OrR References References
   deriving Show
 
--- | De-referenced or "inline" rule where the reference to a rule through its ID
+-- | De-referenced or "inlined" rule where the reference to a rule through its ID
 -- has been replaced by the actual rule.
 -- It may be possible to merge this with 'Rule' into a single polymorphic
 -- data-type
