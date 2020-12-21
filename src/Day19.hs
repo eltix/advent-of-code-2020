@@ -11,20 +11,17 @@ import           LoadAndParse
 
 computeSolutions :: IO (Int, Int)
 computeSolutions = do
-  (rules, messages) <- loadAndParseInput
+  (ruleMap, messages) <- loadAndParseInput
   let
     -- part 1
-    rule0 = fixpoint rules
+    rule0         = fixpoint ruleMap
     validMessages = filter (isValid rule0) messages
-    sol1 = length validMessages
+    sol1          = length validMessages
     -- part 2
     sol2 = 0
-  -- print rules
-  print rule0
-  print validMessages
   return (sol1, sol2)
 
--- | Check that a message is valid by recursing down the rule and consuming the
+-- | Checks that a message is valid by recursing down the rule and consuming the
 -- message on the go
 isValid :: InlinedRule -> Message -> Bool
 isValid irule message = (== (Just [])) $ go message irule
@@ -40,17 +37,14 @@ isValid irule message = (== (Just [])) $ go message irule
         _             -> Nothing
 
 -- | Fixed point iterations of 'inline' until Rule #0 is inlined
-fixpoint :: [IndexedRule] -> InlinedRule
-fixpoint rules = go mempty
+fixpoint :: IntMap Rule -> InlinedRule
+fixpoint ruleMap = go mempty
   where
     go m = case 0 `I.lookup` m of
       Just irule -> irule
       Nothing    -> go $ oneIteration m
-
     oneIteration :: IntMap InlinedRule -> IntMap InlinedRule
-    oneIteration m =
-      let f (i, rule) = (i,) <$> inline m rule
-      in I.union (I.fromList $ mapMaybe f rules) m
+    oneIteration m = I.union m $ I.mapMaybe (inline m) ruleMap
 
 -- | De-reference or "inline" the rules when possible
 inline :: IntMap InlinedRule -> Rule -> Maybe InlinedRule
@@ -72,14 +66,16 @@ data Rule = OneR Char | SeveralR References | OrR References References
 -- has been replaced by the actual rule.
 -- It may be possible to merge this with 'Rule' into a single polymorphic
 -- data-type
-data InlinedRule = One Char | Several [InlinedRule] | Or InlinedRule InlinedRule
+data InlinedRule =
+  One Char
+  | Several [InlinedRule]
+  | Or InlinedRule InlinedRule
   deriving Show
 
 type References = [Int]
-type IndexedRule = (Int, Rule)
 type Message = String
 
-parseRule :: Parser IndexedRule
+parseRule :: Parser (Int, Rule)
 parseRule = do
   i    <- int
   _    <- symbol ":"
@@ -90,8 +86,8 @@ parseRule = do
     parseSub     = many int
     parseOr = OrR <$> parseSub <* symbol "|" <*> parseSub
 
-loadAndParseInput :: IO ([IndexedRule], [Message])
+loadAndParseInput :: IO (IntMap Rule, [Message])
 loadAndParseInput = do
-  rules':messages':[] <- (fmap T.lines . T.splitOn "\n\n") <$> readFile "./inputs/day19-example-2.txt"
+  rules':messages':[] <- (fmap T.lines . T.splitOn "\n\n") <$> readFile "./inputs/day19.txt"
   rules <- mapM (parseRow parseRule) rules'
-  pure (rules, T.unpack <$> messages')
+  pure (I.fromList rules, T.unpack <$> messages')
